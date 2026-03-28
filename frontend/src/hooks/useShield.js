@@ -51,8 +51,9 @@ export function useShield() {
         err.message === "Network Error" ||
         (err.message || "").toLowerCase().includes("network");
       if (net) {
-        msg =
-          "Cannot reach the Face Shield API. Start the backend (uvicorn on port 8000), run the UI with `npm run dev` (not preview) so /api is proxied, or set VITE_API_URL=http://127.0.0.1:8000 in frontend/.env and allow that origin in CORS_ORIGINS.";
+        msg = import.meta.env.PROD
+          ? "Cannot reach the Face Shield API. On Vercel, add Environment Variable VITE_API_URL = your Render URL (e.g. https://your-api.onrender.com, no /api, no trailing slash), redeploy the frontend, then on Render set CORS_ORIGINS to include your exact Vercel origin (e.g. https://your-app.vercel.app)."
+          : "Cannot reach the Face Shield API. Start the backend (uvicorn on port 8000), run the UI with `npm run dev` (not preview) so /api is proxied, or set VITE_API_URL=http://127.0.0.1:8000 in frontend/.env and allow that origin in CORS_ORIGINS.";
       }
       if (err.code === "ECONNABORTED") {
         msg = "Request timed out — the first run can be slow (TensorFlow / MediaPipe). Try again or lower image size.";

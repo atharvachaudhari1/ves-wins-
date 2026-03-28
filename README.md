@@ -53,8 +53,9 @@ Layer 3 may download `face_landmarker.task` into `%LOCALAPPDATA%\faceshield_cach
 ### 2. Vercel — frontend
 
 1. Import the repo, set **Root Directory** to **`frontend`**.
-2. **Environment variables** → add **`VITE_API_URL`** = your Render service origin only, e.g. `https://faceshield-api.onrender.com` (no `/api`, no trailing slash). Redeploy after saving — Vite bakes this in at **build** time.
-3. Deploy. The UI calls `VITE_API_URL` + `/api/...`; CORS must allow your **`*.vercel.app`** origin (step 1).
+2. **Required —** **Environment variables** → add **`VITE_API_URL`** = your Render service **origin only**, e.g. `https://faceshield-api.onrender.com` (no `/api`, no trailing slash). Without this, production still calls `/api` on Vercel, which has no backend — the UI will show a network error. Redeploy after saving; Vite bakes `VITE_API_URL` in at **build** time.
+3. On Render, set **`CORS_ORIGINS`** to your real Vercel URL (comma-separate multiple), e.g. `https://your-app.vercel.app` — not only `http://localhost:5173`.
+4. Deploy. The browser calls `VITE_API_URL` + `/api/...` cross-origin; the backend must list your Vercel origin in **`CORS_ORIGINS`**.
 
 ### 3. Smoke test
 
