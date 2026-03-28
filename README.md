@@ -2,9 +2,16 @@
 
 Triple-domain perturbation: **pixel** noise, **FFT** frequency-domain noise, and **MediaPipe** landmark–weighted mask noise. Stack: **FastAPI** + **React 18 / Vite / Tailwind**.
 
+**Repository:** [github.com/atharvachaudhari1/ves-wins-](https://github.com/atharvachaudhari1/ves-wins-)
+
+## Configuration
+
+- Copy **`.env.example`** at the repo root to **`backend/.env`** and adjust flags (for example `USE_DEEPFACE`, `CORS_ORIGINS`, `DEEPFACE_MODEL`). See comments in `.env.example`.
+- For production builds, set **`VITE_API_URL`** in the frontend environment (see Deploy below).
+
 ## Run locally (two terminals)
 
-From the **`faceshield`** folder (or use `faceshield/backend` and `faceshield/frontend` from the repo root):
+From the **repository root** (folders `backend/` and `frontend/` are next to each other):
 
 **Terminal 1 — backend**
 
