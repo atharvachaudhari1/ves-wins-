@@ -28,6 +28,32 @@ Open the URL Vite prints (usually `http://localhost:5173`). The dev server proxi
 
 Layer 3 may download `face_landmarker.task` into `%LOCALAPPDATA%\faceshield_cache\` on Windows.
 
+## Deploy: Render (API) + Vercel (UI)
+
+### 1. Render — backend
+
+1. In [Render](https://render.com), create a **Web Service** from this repo (or use **Blueprint** with `render.yaml`).
+2. **Root Directory:** `backend`
+3. **Build command:** `pip install -r requirements.txt`
+4. **Start command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
+5. **Environment** (dashboard or `render.yaml`):
+   - `CORS_ORIGINS` — include your Vercel URL, e.g. `https://my-app.vercel.app` (comma-separate if you also use local dev URLs).
+   - Optional: `USE_DEEPFACE=1`, `MAX_IMAGE_SIZE_MB`, `DEEPFACE_MODEL`, etc.
+6. After deploy, note the public URL, e.g. `https://faceshield-api.onrender.com`.
+
+**Note:** TensorFlow + DeepFace are large. Render **free** tier may run out of **RAM or disk** during install or at runtime; upgrade the instance if builds fail or the app is OOM-killed.
+
+### 2. Vercel — frontend
+
+1. Import the repo, set **Root Directory** to **`frontend`**.
+2. **Environment variables** → add **`VITE_API_URL`** = your Render service origin only, e.g. `https://faceshield-api.onrender.com` (no `/api`, no trailing slash). Redeploy after saving — Vite bakes this in at **build** time.
+3. Deploy. The UI calls `VITE_API_URL` + `/api/...`; CORS must allow your **`*.vercel.app`** origin (step 1).
+
+### 3. Smoke test
+
+- `GET https://<render-host>/health` → `{"status":"ok",...}`
+- Open the Vercel site, upload an image, run shield — if the browser console shows CORS errors, fix **`CORS_ORIGINS`** on Render.
+
 ## Suggested build order (Cursor)
 
 Work bottom-up so each step is testable before the next:

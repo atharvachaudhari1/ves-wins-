@@ -13,7 +13,8 @@ function apiBase() {
   if (import.meta.env.DEV) {
     return "/api";
   }
-  return "http://127.0.0.1:8000/api";
+  // Production: same-origin `/api` (use Vercel rewrites to your real API) or set VITE_API_URL.
+  return "/api";
 }
 
 const client = axios.create({

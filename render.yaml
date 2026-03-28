@@ -1,0 +1,28 @@
+# Render Blueprint — Web Service for the FastAPI backend.
+# Dashboard: New → Blueprint → connect repo, or create Web Service manually with the same settings.
+#
+# After deploy, copy the service URL (e.g. https://faceshield-api.onrender.com) into Vercel:
+#   VITE_API_URL = that origin (no trailing slash, no /api)
+# And set CORS_ORIGINS on Render to your Vercel URL, e.g. https://your-app.vercel.app
+
+services:
+  - type: web
+    name: faceshield-api
+    runtime: python
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: CORS_ORIGINS
+        sync: false
+      - key: MAX_IMAGE_SIZE_MB
+        value: "10"
+      - key: DEEPFACE_MODEL
+        value: Facenet
+      - key: USE_DEEPFACE
+        value: "0"
