@@ -1,4 +1,9 @@
+# Local secrets — keep out of git
 .env
+!.env.example
+# These are non-secret dev defaults committed on purpose (no API keys)
+!backend/.env
+!frontend/.env
 .venv/
 venv/
 __pycache__/
