@@ -1,5 +1,6 @@
 # Render Blueprint — Web Service for the FastAPI backend.
 # Python 3.10.x + pinned deps for numpy/tensorflow/deepface wheels on Render.
+# Build installs backend/requirements.txt (rootDir: backend). Do not use requirements-render.txt.
 #
 # After deploy, set VITE_API_URL on Vercel to this service origin; set CORS_ORIGINS here to your Vercel URL.
 

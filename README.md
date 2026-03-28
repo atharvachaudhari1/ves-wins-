@@ -41,7 +41,7 @@ Layer 3 may download `face_landmarker.task` into `%LOCALAPPDATA%\faceshield_cach
 
 1. In [Render](https://render.com), create a **Web Service** from this repo (or use **Blueprint** with `render.yaml`).
 2. **Root Directory:** `backend`
-3. **Build command:** `pip install -r requirements.txt`
+3. **Build command:** `pip install -r requirements.txt` (this reads **`backend/requirements.txt`**). If the build says the requirements file is missing, open the service **Settings** and remove any custom command that references **`requirements-render.txt`** or the repo root — use exactly the command above.
 4. **Start command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
 5. **Environment** (dashboard or `render.yaml`):
    - `CORS_ORIGINS` — include your Vercel URL, e.g. `https://my-app.vercel.app` (comma-separate if you also use local dev URLs).
