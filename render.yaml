@@ -1,12 +1,7 @@
 # Render Blueprint — Web Service for the FastAPI backend.
-# Dashboard: New → Blueprint → connect repo, or create Web Service manually with the same settings.
+# Python 3.10.x + pinned deps for numpy/tensorflow/deepface wheels on Render.
 #
-# Python: Render’s default for new services is 3.14.x; this app needs 3.11.x (numpy/tensorflow wheels).
-# Use this Blueprint, or set PYTHON_VERSION=3.11.11 on the service, or rely on repo-root .python-version.
-#
-# After deploy, copy the service URL (e.g. https://faceshield-api.onrender.com) into Vercel:
-#   VITE_API_URL = that origin (no trailing slash, no /api)
-# And set CORS_ORIGINS on Render to your Vercel URL, e.g. https://your-app.vercel.app
+# After deploy, set VITE_API_URL on Vercel to this service origin; set CORS_ORIGINS here to your Vercel URL.
 
 services:
   - type: web
@@ -20,7 +15,7 @@ services:
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
-        value: "3.11.11"
+        value: "3.10.13"
       - key: CORS_ORIGINS
         sync: false
       - key: MAX_IMAGE_SIZE_MB
