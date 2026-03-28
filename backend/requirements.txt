@@ -1,3 +1,5 @@
+# Render: use Python 3.11.x (backend/.python-version). If the build still shows 3.14,
+# set dashboard env PYTHON_VERSION=3.11.11 and deploy latest main (not an older commit).
 fastapi==0.104.1
 uvicorn==0.24.0
 python-multipart==0.0.6
