@@ -1,0 +1,27 @@
+You are building FaceShield — a triple-domain adversarial image protection system.
+
+STACK:
+- Backend: Python 3.10+, FastAPI, uvicorn, DeepFace, OpenCV, NumPy, SciPy, MediaPipe
+- Frontend: React 18, Vite, Tailwind CSS
+- Communication: REST API, base64 image transfer
+
+ARCHITECTURE RULES:
+- Layer 1 (`backend/services/layer1_pixel.py`): pixel-space adversarial noise only
+- Layer 2 (`backend/services/layer2_frequency.py`): FFT frequency domain perturbation only
+- Layer 3 (`backend/services/layer3_semantic.py`): MediaPipe landmark detection + weighted mask noise only
+- `noise_composer.py`: orchestrates all 3 layers in sequence, returns per-layer metrics
+- `deepface_probe.py`: runs `DeepFace.verify()` after each layer (each stage vs original), returns confidence at each stage
+
+CODING RULES:
+- Every function must have a docstring
+- All image operations use numpy arrays internally
+- base64 encode/decode only at API boundary in `backend/utils/image_utils.py`
+- Never mix layer logic — keep each layer file independent
+- Return confidence scores after every layer, not just final output
+- API/shield errors: JSON body `{"error": "<message>"}` with HTTP 422
+
+DEMO REQUIREMENT:
+- `deepface_probe.py` must return a dict with keys:
+  `original`, `after_layer1`, `after_layer2`, `after_layer3`
+  (each value: e.g. `confidence_pct`, `raw`, optional `distance` / `verified` when DeepFace runs)
+  so the frontend `ConfidenceTable` can show the four-row confidence drop table.
